@@ -134,3 +134,16 @@ Vbuddy’s flag register has two modes of operation.  The default mode is **TOGG
 However, using the **_vbdSetMode(1)_** function, you can set the mode to ONE-SHOT behaviour. Whenever the switch is pressed, the flag register is set to ‘1’ as before – now the flag is **“ARMED”** ready to fire. However, when the flag register is read, it immediate resets to ‘0’.  
 
 Modify **counter.sv** so that pressing the switch on EC11 forces the counter to pre-set to Vbuddy’s parameter value. (How?)  Compile and test your design.
+
+(i have no idea what this task is asking me to do)
+
+**Step 2: Single stepping**
+
+Using the one-shot behaviour of the Vbuddy flag, it is possible to provide one clock pulse each time you press the rotary encoder switch.  In other words, you can single step the counting action.  
+
+Modify **counter.sv** so that you only increment the counter each time you press the switch.
+
+### Modifications made
+By adding a single line of code **_vbdSetMode(1)_**, the counter would increase everytime the switch is pressed.
+
+![task3_code](images/task3_code.png)

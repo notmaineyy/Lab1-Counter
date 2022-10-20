@@ -12,7 +12,7 @@
 ### Task 1
 ---
 
-#### Problems Encountered
+### Problems Encountered
 When writing the code for the testbench, we had errors that the files needed to be included (at the beginning) were not found. This was because the folder that we are working on had to be the top directory. Hence, we fixed that by changing our directory and it went smoothly.
 
 #### Creating System Verilog file
@@ -69,17 +69,45 @@ I noticed that there were fewer problems encountered on MacOS, and by following 
 
 ![GTKWave](images/task1_gtkwave.png)
 
-Make sure you understand all waveform signals.  
-
-##### Why is the time axis in ps? Does it matter?
+#### Why is the time axis in ps? Does it matter?
 It does not matter
 
-##### Waveform Description
+#### Waveform Description
 2nd rising edge --> i=0
 
 rst = 1 when i < 2 (when 0,1,2)
 
 en = 1 when i > 4 (i==5)
 
+#### Creation of shell script
+This is a shortcut to avoid retyping all the commands to make the executable model.
+Created a shell script doit.sh with the following
+![bash script](images/doit.jpg)
 
+We can now run all the commands in one go by typing:   
+```bash
+source ./doit.sh
+```
+## TEST YOURSELF CHALLENGE
+1.	Modify the testbench so that you stop counting for 3 cycles once the counter reaches 0x9, and then resume counting.  You may also need to change the stimulus for _rst_.
 
+The following changes were made:
+![codechanges](images/task1_challenge1_change.png)
+
+New GTKwave:
+![newgtkwave](images/task1_challenge1_wave.png)
+
+2.	The current counter has a synchronous reset. To implement asynchronous reset, you can change line 11 of counter.sv to detect change in _rst_ signal.  (See notes.) 
+
+Asynchronous reset: Circuit should reset whenever reset signal is active 'Irrespective' of clock.
+
+Changes made:
+![resetchanges](images/task1_challenge2_change.png)
+
+This causes the counter to not increase in the same clock cycle as the reset. Reset applies at the current rising edge of the clock. Comparatively for a synchoronous reset the reset only applies on the next rising edge of the clock.
+
+#### Synchronous Reset
+![before](images/task1_challenge2_bbefore.png)
+
+#### Asynchronous Reset
+![after](images/task1_challenge2_after.png)

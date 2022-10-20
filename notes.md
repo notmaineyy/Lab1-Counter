@@ -116,3 +116,21 @@ This causes the counter to not increase in the same clock cycle as the reset. Re
 #### Asynchronous Reset
 
 ![after](images/task1_challenge2_after.png)
+
+## Task 2
+????
+
+
+## Task 3: Vbuddy parameter & flag in one-shot mode (OPTIONAL)
+
+The rotary encodes (EC11) provides input from Vbuddy to the Verilator simulation model.  Turning the encoder changes a stored parameter value on Vbuddy independently from the Verilator simulation.  This parameter value can be read using the **_vbdValue( )_** function, and is displayed on the bottom left corner of the TFT screen in both decimal and hexadecimal format.  
+
+**Step 1: Loadable counter**
+
+Copy across to the task3 folder the required files: **_counter.sv, counter_tb.cpp, vbuddy.cpp, doit.sh_** and **_vbuddy.cfg_**.  
+
+Vbuddy’s flag register has two modes of operation.  The default mode is **TOGGLE**, which means that everything the rotary encoder switch is pressed, the flag will toggle as indicated at the bottom of the TFT screen.  
+
+However, using the **_vbdSetMode(1)_** function, you can set the mode to ONE-SHOT behaviour. Whenever the switch is pressed, the flag register is set to ‘1’ as before – now the flag is **“ARMED”** ready to fire. However, when the flag register is read, it immediate resets to ‘0’.  
+
+Modify **counter.sv** so that pressing the switch on EC11 forces the counter to pre-set to Vbuddy’s parameter value. (How?)  Compile and test your design.

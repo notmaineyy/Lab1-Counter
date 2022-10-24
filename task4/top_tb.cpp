@@ -23,8 +23,8 @@ int main(int argc, char **argv, char **env){
     top->clk = 1;
     top->rst = 1;
     top->en = 0;
-    top-> value = 0;
-
+    //add top->input
+    
     //run simulation for many clock cycles
     for (i=0; i<300;i++){
 
@@ -44,10 +44,8 @@ int main(int argc, char **argv, char **env){
         // ----- end of Vbuddy output section
 
         // change input stimuli
-        top->rst = vbdFlag();
-        top->value = vbdValue();
-        vbdSetMode(1);  //one-shot behaviour, reflects input stimuli change. 
-
+        top->rst = (i<2) | (i==15);
+        top->en = vbdFlag();
         if (Verilated::gotFinish()) exit(0);
     }
 

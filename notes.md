@@ -135,7 +135,18 @@ However, using the **_vbdSetMode(1)_** function, you can set the mode to ONE-SHO
 
 Modify **counter.sv** so that pressing the switch on EC11 forces the counter to pre-set to Vbuddy’s parameter value. (How?)  Compile and test your design.
 
-(i have no idea what this task is asking me to do)
+---
+
+A new input 'value' was added into **counter.sv**. 'value' is the pre-set value that we want to force the counter to go to. The changes were made as seen below.
+
+![task3](images/task3_changes.png)
+
+### Results
+Flag is up: Turning the switch changes the value on the counter. 
+
+Flag is down: Turning the switch does not change the value on the counter.
+
+Using the vbdSetMode(1) function, you can set the mode to ONE-SHOT behaviour. Whenever the switch is pressed, the flag register is set to ‘1’ as before – now the flag is “ARMED” ready to fire. However, when the flag register is read, it immediate resets to ‘0’.
 
 **Step 2: Single stepping**
 
@@ -147,3 +158,42 @@ Modify **counter.sv** so that you only increment the counter each time you press
 By adding a single line of code **_vbdSetMode(1)_**, the counter would increase everytime the switch is pressed.
 
 ![task3_code](images/task3_code.png)
+
+## Task 4: Displaying count as Binary Coded Decimal (BCD) numbers (OPTIONAL)
+---
+
+In this task, a top-level module (**top.sv**) will be created, which has the counter module, and a second module that converts the 8-bit binary number into three BCD digits. We can find out how the binary to BCD conversion algorithm works from the course webpage.  
+
+Copy and paste the following code to **top.sv**:
+
+```verilog
+module top #(
+  parameter WIDTH = 8,
+  parameter DIGITS = 3
+)(
+  // interface signals
+  input  wire             clk,      // clock 
+  input  wire             rst,      // reset 
+  input  wire             en,       // enable
+  input  wire [WIDTH-1:0] v,        // value to preload
+  output wire [11:0]      bcd       // count output
+);
+
+  wire  [WIDTH-1:0]       count;    // interconnect wire
+
+counter myCounter (
+  .clk (clk),
+  .rst (rst),
+  .en (en),
+  .count (count)
+);
+
+bin2bcd myDecoder (
+  .x (count),
+  .BCD (bcd)
+);
+
+endmodule
+```
+Modify the testbench file **_top_tb.cpp_** accordingly.  
+Modify the **_doit.sh_** file from task 3 to include all the modules (**_top.sv, counter.sv, bin2bcd.sv_** and **_top_tb.sv_**).  Compile and run the Verilated model.  Check that it works according to expectation.
